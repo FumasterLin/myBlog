@@ -1,0 +1,19 @@
+# pack-refs with: peeled fully-peeled sorted 
+8e5d40fa37082dd5d3312ad2ac637c234c1efa7e refs/remotes/origin/i18n
+5e8876d5779e7be35738b47eeeb305c0d71db2f6 refs/remotes/origin/master
+9ea1b0daa10ea5138174a5b85a0d8b7e2fd86dcc refs/remotes/origin/renovate/actions-setup-node-2.x
+1ce68b1d0d6c89c90d9513777d7fdb9fdbc9377f refs/remotes/origin/renovate/eslint-7.x
+8a0b72121ba74d381989435f68b2b5828eb9c2ab refs/remotes/origin/renovate/hexo-5.x
+ef145fbe5adebccf77815a9feb68d62b1946dfb7 refs/remotes/origin/renovate/husky-4.x
+7c2aad39552ee1909e30c49a08a2333f0f443ad9 refs/remotes/origin/renovate/js-yaml-3.x
+8f1ea4a257db353fe5e4a4d69e678d386397272c refs/remotes/origin/renovate/next-theme-eslint-config-0.x
+f27e45bcaecdfb6fb86187ff4d5eab024ec792c1 refs/tags/v8.0.0
+1e026c7c39a14e13a58001e1ee742273ec913b02 refs/tags/v8.0.0-rc.1
+^d6731e627fb5e24fd587132739dd0a75b3803be1
+e92a3d8cd6105615e6deb089337d296ef5cfcbf4 refs/tags/v8.0.0-rc.2
+036d2d305994e431e09bf76aba4ea302cd654be2 refs/tags/v8.0.0-rc.3
+53a220f3984f5b0e1691b9fa76531ddb402dd998 refs/tags/v8.0.0-rc.4
+74ccc182f3a9d661b30b4084b3ccf1d063a282d4 refs/tags/v8.0.0-rc.5
+460087d6f0ac4e0dc05cf0571ccc38ddf4c79f66 refs/tags/v8.0.1
+ffac31410007fa2e0a94ba821b7287ca86ba11eb refs/tags/v8.0.2
+7bf3e602a16949b430475f2583c86da624ea5301 refs/tags/v8.1.0
