@@ -104,7 +104,10 @@ theme: next_new
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: git
+  repo:
+    GitHub: https://github.com/fumasterlin/fumasterlin.github.io.git
+  branch: master
 
 symbols_count_time:
   symbols: true
