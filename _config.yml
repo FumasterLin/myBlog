@@ -118,3 +118,11 @@ symbols_count_time:
   awl: 4
   wpm: 275
   suffix: "mins."
+
+# JavaScript 3D library.
+# Dependencies: https://github.com/theme-next/theme-next-three
+three:
+  enable: true
+  three_waves: false
+  canvas_lines: true
+  canvas_sphere: false
