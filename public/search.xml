@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>C语言实现定时关机小程序</title>
+    <url>/2016/09/07/16-09-07C-Language%20for%20realizing%20shutdown/</url>
+    <content><![CDATA[<hr>
+<h3 id="程序功能说明"><a href="#程序功能说明" class="headerlink" title="程序功能说明"></a>程序功能说明</h3><blockquote>
+<ul>
+<li>输入1可实现自定义10分钟内的定时关机</li>
+<li>输入2可实现立即关机</li>
+<li>输入3可实现注销计算机</li>
+<li>输入0可退出程序</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="程序运行截图"><a href="#程序运行截图" class="headerlink" title="程序运行截图"></a>程序运行截图</h3><p><img src="http://od191c801.bkt.clouddn.com/C%E5%85%B3%E6%9C%BA%E7%A8%8B%E5%BA%8F.png"></p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**********关于system(&quot;color 参数&quot;)配置从控制台颜色************</span></span><br><span class="line"><span class="comment">0 = 黑色    8 = 灰色    1 = 淡蓝      9 = 蓝色</span></span><br><span class="line"><span class="comment">2 = 淡绿    A = 绿色    3 = 湖蓝      B = 淡浅绿  </span></span><br><span class="line"><span class="comment">C = 红色    4 = 淡红    5 = 紫色      D = 淡紫  </span></span><br><span class="line"><span class="comment">6 = 黄色    E = 淡黄    7 = 白色      F = 亮白</span></span><br><span class="line"><span class="comment">****************************************************************/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> cmd[<span class="number">20</span>]=<span class="string">&quot;shutdown -s -t &quot;</span>;</span><br><span class="line">    <span class="keyword">char</span> t[<span class="number">5</span>]=<span class="string">&quot;0&quot;</span>;</span><br><span class="line">    <span class="keyword">int</span> c;</span><br><span class="line"></span><br><span class="line">    system(<span class="string">&quot;title C语言关机程序&quot;</span>);  <span class="comment">//设置cmd窗口标题</span></span><br><span class="line">    system(<span class="string">&quot;mode con cols=48 lines=25&quot;</span>);  <span class="comment">//窗口宽度高度 </span></span><br><span class="line">    system(<span class="string">&quot;color f0&quot;</span>);  <span class="comment">////f为背景色，0为前景色</span></span><br><span class="line">    system(<span class="string">&quot;date /T&quot;</span>);<span class="comment">//显示系统日期</span></span><br><span class="line">    system(<span class="string">&quot;TIME /T&quot;</span>);<span class="comment">//显示系统时间</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;----------- C语言关机程序 -----------\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;1.实现10分钟内的定时关闭计算机\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;2.立即关闭计算机\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;3.注销计算机\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;0.退出系统\n&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;-------------------------------------\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;c);</span><br><span class="line">    <span class="keyword">switch</span>(c) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;您想在多少秒后自动关闭计算机？（0~600）\n&quot;</span>);</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,t);</span><br><span class="line">            system(<span class="built_in">strcat</span>(cmd,t));</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">            system(<span class="string">&quot;shutdown -p&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            system(<span class="string">&quot;shutdown -l&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;Error!\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="小总结"><a href="#小总结" class="headerlink" title="小总结"></a>小总结</h3><blockquote>
+<ul>
+<li>要点就是system()函数的运用和cmd命令的了解</li>
+<li>函数原型int system(const char * string);</li>
+<li>strcat()函数原型char *strcat(char *dest, const char *src);<blockquote>
+<p>strcat() 会将参数 src 字符串复制到参数 dest 所指的字符串尾部；dest 最后的结束字符 NULL 会被覆盖掉，并在连接后的字符串的尾部再增加一个 NULL。</p>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+<h3 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h3><blockquote>
+<ul>
+<li>博客：<a href="www.fumasterlin.com">fumasterlin.com</a></li>
+<li>邮箱：<a href="fumasterlin@163.com">fumasterlin@163.com</a></li>
+</ul>
+</blockquote>
+<p>————————-2016.09.07——————————–</p>
+]]></content>
+      <tags>
+        <tag>C语言</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C语言中memset()用法</title>
+    <url>/2016/09/12/C%E8%AF%AD%E8%A8%80%E4%B8%ADmemset()%E7%94%A8%E6%B3%95/</url>
+    <content><![CDATA[<hr>
+<h3 id="memset-功能"><a href="#memset-功能" class="headerlink" title="memset()功能"></a>memset()功能</h3><blockquote>
+<p><strong>功 能:</strong> 将s所指向的某一块内存中的每个字节的内容全部设置为ch指定的ASCII值,</p>
+</blockquote>
+<blockquote>
+<p>块的大小由第三个参数指定,这个函数通常为新申请的内存做初始化工作</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="用法示例"><a href="#用法示例" class="headerlink" title="用法示例"></a>用法示例</h3><ol>
+<li><p><strong>原型:</strong> void *memset(void *s, char ch, unsigned n);</p>
+</li>
+<li><p><strong>程序例:</strong></p>
+</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;memory.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> buffer[] = <span class="string">&quot;Hello world/n&quot;</span>;</span><br><span class="line">　　<span class="built_in">printf</span>(<span class="string">&quot;Buffer before memset: %s\n&quot;</span>, buffer);</span><br><span class="line">　　<span class="built_in">memset</span>(buffer, <span class="string">&#x27;*&#x27;</span>, <span class="built_in">strlen</span>(buffer) );</span><br><span class="line">　　<span class="built_in">printf</span>(<span class="string">&quot;Buffer after memset: %s\n&quot;</span>, buffer);</span><br><span class="line">　　<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>输出结果：</strong></p>
+<blockquote>
+<p> Buffer before memset: Hello world<br> Buffer after memset: ***********</p>
+</blockquote>
+</blockquote>
+<h3 id="memset函数详细说明"><a href="#memset函数详细说明" class="headerlink" title="memset函数详细说明"></a>memset函数详细说明</h3><p><strong>（1）void *memset(void *s,int c,size_t n)</strong></p>
+<blockquote>
+<p><strong>总的作用：</strong>将已开辟内存空间 s 的首 n 个字节的值设为值 c。</p>
+</blockquote>
+<p><strong>（2）例子：</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">　　<span class="keyword">char</span> *s=<span class="string">&quot;Golden Global View&quot;</span>;</span><br><span class="line">　　clrscr();</span><br><span class="line">　　<span class="built_in">memset</span>(s,<span class="string">&#x27;G&#x27;</span>,<span class="number">6</span>);<span class="comment">//貌似这里有点问题//</span></span><br><span class="line">　　<span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>,s);</span><br><span class="line">　　getchar();</span><br><span class="line">　　<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;　</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>【这个问题相当大，程序根本就运行不下去了，你这里的S指向的是一段<code>只读</code>的内存，而你memset又试图修改它，所以运行时要出错，修改办法char *s修改为char s[ ]】</p>
+</blockquote>
+<p><strong>（3）memset() 函数常用于<code>内存空间初始化</code>。如：</strong></p>
+<blockquote>
+<p>char str[100];<br>memset(str,0,100);</p>
+</blockquote>
+<p><strong>（4）memset()的深刻内涵：</strong>用来对一段内存空间全部设置为某个字符，一般用在对定义的字符串进行初始化为：memset(a, ‘\0’, sizeof(a));</p>
+<hr>
+<h3 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h3><blockquote>
+<ul>
+<li>博客：<a href="www.fumasterlin.com">fumasterlin.com</a></li>
+<li>邮箱：<a href="fumasterlin@163.com">fumasterlin@163.com</a></li>
+</ul>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>C语言</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我的第一个独立博客——东不是东西.FumasrerLin</title>
+    <url>/2016/09/06/myFirstBlog/</url>
+    <content><![CDATA[<center>
+    <p><img src="http://od191c801.bkt.clouddn.com/head1.jpg" align="center"></p>
+</center>
+
+
+<hr>
+<h3 id="一点点说明"><a href="#一点点说明" class="headerlink" title="一点点说明"></a>一点点说明</h3><blockquote>
+<ul>
+<li>一看上图就知道</li>
+<li>这是一个个人特征鲜明的独立博客</li>
+<li>初衷就是想要搭建一个属于自己的独立博客或者网站</li>
+<li>最近学习了Git这个工具，然后发现新大陆，GitHub+hexo可以搭建独立博客</li>
+<li>于是便开始研究如何搭建，经过了好几天时间，终于有了这个博客</li>
+<li>学会了如何用MarkDown写文档，简直好用，妈妈再也不用担心我的排版了</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+<h3 id="Who-am-i"><a href="#Who-am-i" class="headerlink" title="Who am i?"></a>Who am i?</h3><blockquote>
+<ul>
+<li>我是林言东</li>
+<li>目前是集美大学机械电子工程的一名大四狗</li>
+<li>对！还是一只Dog！各方面都是一只活生生的Dog啊</li>
+<li>Lucky dog</li>
+</ul>
+</blockquote>
+<h3 id="FumasterLin是什么意思？"><a href="#FumasterLin是什么意思？" class="headerlink" title="FumasterLin是什么意思？"></a>FumasterLin是什么意思？</h3><blockquote>
+<ul>
+<li>FumasterLin是我自己瞎组合的一个英文名，有误可以来指正一二，哈哈</li>
+<li>FumasterLin=future+master+lin（我的姓）</li>
+<li>读音：[‘fjʊmɑːstəlɪn]</li>
+<li>这个名字呢，有点带有自我激励的意思在</li>
+<li>还望不喜勿喷哈</li>
+</ul>
+</blockquote>
+<h3 id="关于“东不是东西”"><a href="#关于“东不是东西”" class="headerlink" title="关于“东不是东西”"></a>关于“东不是东西”</h3><blockquote>
+<ul>
+<li>其实我也不知道为什么要取这个名字</li>
+<li>就是想着想着就想到了</li>
+<li>哈哈哈哈哈哈哈哈哈哈</li>
+</ul>
+</blockquote>
+<h3 id="搭建一个这样的博客的初衷是什么？"><a href="#搭建一个这样的博客的初衷是什么？" class="headerlink" title="搭建一个这样的博客的初衷是什么？"></a>搭建一个这样的博客的初衷是什么？</h3><blockquote>
+<ul>
+<li>希望有个独立空间来记录各种事情</li>
+<li>一些学习历程</li>
+<li>记录一些学习笔记</li>
+<li>一些生活经历</li>
+<li>一些个人想法</li>
+<li>PS：希望我能坚持记录更新</li>
+</ul>
+</blockquote>
+<h3 id="相关功能"><a href="#相关功能" class="headerlink" title="相关功能"></a>相关功能</h3><blockquote>
+<ul>
+<li>这个用的是Hexo当前应该是最火的主题NexT，网上也有一些人也是这个主题。</li>
+<li>选它主要还是因为好看.简洁.比格满满</li>
+<li>加入了多说的留言评价，各平台的分享，喜欢点赞，还有百度的留言统计功能</li>
+<li>有些页面加入了外链音乐播放器，比如这篇文章，还有&lt;关于&gt;的页面</li>
+<li>图床用了七牛的云端服务，相当好用，目前还是免费用户，穷嘛</li>
+<li>移动端打开的时候，显示不了侧边栏。还是PC端打开看起来比格比较高哈哈哈</li>
+<li><strong>最后还是希望大家来多多留言呐</strong></li>
+</ul>
+</blockquote>
+<h3 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h3><blockquote>
+<ul>
+<li>博客：<a href="www.fumasterlin.com">fumasterlin.com</a></li>
+<li>邮箱：<a href="fumasterlin@163.com">fumasterlin@163.com</a></li>
+</ul>
+</blockquote>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=247176&auto=1&height=66"></iframe>
+
+<p>————————-2016.09.06——————————–</p>
+]]></content>
+      <tags>
+        <tag>清新之比</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>栈的实现及其小应用-括号匹配（C++版）</title>
+    <url>/2016/09/10/%E6%A0%88%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8F%8A%E5%85%B6%E5%B0%8F%E5%BA%94%E7%94%A8-%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D%EF%BC%88C++%E7%89%88%EF%BC%89/</url>
+    <content><![CDATA[<hr>
+<h2 id="1-栈的概念和特点"><a href="#1-栈的概念和特点" class="headerlink" title="1. 栈的概念和特点"></a>1. 栈的概念和特点</h2><blockquote>
+<ul>
+<li>定义：栈是限定仅在表头进行插入和删除操作的线性表</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>栈作为一种数据结构，是一种特殊的线性表，它的插入和删除运算均在<code>同一端</code>进行。</li>
+</ul>
+</blockquote>
+<ul>
+<li>这一端被称为<code>栈顶(top)</code>，另一端为<code>栈底</code>，插入称为<code>进栈(push)</code>，删除称为<code>出栈(pop)</code>。</li>
+<li>有<code>后进先出</code>的性质。</li>
+<li>栈顶top相当于顺序表中的size，即元素个数。</li>
+<li>关于顺序表，可参照我的上一篇文章：<a href="http://fumasterlin.com/2016/09/09/%E7%BA%BF%E6%80%A7%E9%A1%BA%E5%BA%8F%E8%A1%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%88C%E8%AF%AD%E8%A8%80%E7%89%88%EF%BC%89/#more">线性顺序表的实现（C语言版）</a><a id="more"></a>
+
+</li>
+</ul>
+<h2 id="2-栈的操作及实现"><a href="#2-栈的操作及实现" class="headerlink" title="2. 栈的操作及实现"></a>2. 栈的操作及实现</h2><blockquote>
+<ul>
+<li>1、类的定义</li>
+<li>2、初始化</li>
+<li>3、判断是否为空</li>
+<li>4、取得栈顶值</li>
+<li>5、入栈操作</li>
+<li>6、出栈操作</li>
+<li>7、打印栈的内容</li>
+</ul>
+</blockquote>
+<h3 id="头文件的定义"><a href="#头文件的定义" class="headerlink" title="头文件的定义"></a>头文件的定义</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> SEQSTACK_H_</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SEQSTACK_H_</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LENGTH 100</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> DATA_TYPE;</span><br><span class="line"><span class="comment">//栈类的定义</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	DATA_TYPE data[LENGTH];</span><br><span class="line">	<span class="keyword">int</span> top=<span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">实现栈操作函数的定义，从Stack公有继承过来</span></span><br><span class="line"><span class="comment">ps：也可以直接把Stack里的成员变量直接放到这个类里，直接封装起来</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">seqStackFun</span>:</span><span class="keyword">public</span> Stack</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	seqStackFun();<span class="comment">//构造函数，初始化在这里做</span></span><br><span class="line">	~seqStackFun();</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">()</span></span>;<span class="comment">//判断栈是否为空</span></span><br><span class="line">	<span class="function">DATA_TYPE <span class="title">getTop</span><span class="params">()</span></span>;<span class="comment">//取得栈顶值</span></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">push</span><span class="params">( DATA_TYPE pushData)</span></span>;<span class="comment">//入栈操作</span></span><br><span class="line">	<span class="function">DATA_TYPE <span class="title">pop</span><span class="params">()</span></span>;<span class="comment">//出栈操作</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">displayseqStack</span><span class="params">()</span></span>;<span class="comment">//打印栈的内容</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// !SEQSTACK_H_</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="具体函数的实现"><a href="#具体函数的实现" class="headerlink" title="具体函数的实现"></a>具体函数的实现</h3><h4 id="1-初始化即构造函数实现"><a href="#1-初始化即构造函数实现" class="headerlink" title="1. 初始化即构造函数实现"></a>1. 初始化即构造函数实现</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">seqStackFun::seqStackFun()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;top = <span class="number">0</span>;<span class="comment">//top置0</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//析构函数为空</span></span><br><span class="line">seqStackFun::~seqStackFun()</span><br><span class="line">&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-判断栈是否为空"><a href="#2-判断栈是否为空" class="headerlink" title="2. 判断栈是否为空"></a>2. 判断栈是否为空</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">seqStackFun::isEmpty</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (<span class="keyword">this</span>-&gt;top&gt;<span class="number">0</span> ? <span class="number">0</span> : <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-获取栈顶数据"><a href="#3-获取栈顶数据" class="headerlink" title="3. 获取栈顶数据"></a>3. 获取栈顶数据</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">DATA_TYPE <span class="title">seqStackFun::getTop</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="number">0</span> == <span class="keyword">this</span>-&gt;top)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;栈为空，没有数据&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">		<span class="keyword">return</span> (<span class="keyword">this</span>-&gt;data[<span class="keyword">this</span>-&gt;top - <span class="number">1</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-入栈"><a href="#4-入栈" class="headerlink" title="4. 入栈"></a>4. 入栈</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">seqStackFun::push</span><span class="params">(DATA_TYPE pushData)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">this</span>-&gt;top == LENGTH)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;栈已经满了&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;data[<span class="keyword">this</span>-&gt;top] = pushData;</span><br><span class="line">		<span class="keyword">this</span>-&gt;top++;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="5-出栈"><a href="#5-出栈" class="headerlink" title="5. 出栈"></a>5. 出栈</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">DATA_TYPE <span class="title">seqStackFun::pop</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="number">0</span> == <span class="keyword">this</span>-&gt;top)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;栈中无数据，为空&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;top--;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>-&gt;data[<span class="keyword">this</span>-&gt;top];</span><br><span class="line">	&#125;</span><br><span class="line">		</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="6-打印栈中的内容"><a href="#6-打印栈中的内容" class="headerlink" title="6. 打印栈中的内容"></a>6. 打印栈中的内容</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">seqStackFun::displayseqStack</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="number">0</span> == <span class="keyword">this</span>-&gt;top)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;栈中无数据，为空！&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> loop = <span class="number">0</span>; loop &lt; <span class="keyword">this</span>-&gt;top; loop++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="keyword">this</span>-&gt;data[loop] &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-栈的小应用-括号的匹配"><a href="#3-栈的小应用-括号的匹配" class="headerlink" title="3. 栈的小应用-括号的匹配"></a>3. 栈的小应用-括号的匹配</h2><h3 id="匹配函数"><a href="#匹配函数" class="headerlink" title="匹配函数"></a>匹配函数</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">判断栈顶数据和x是否相同，是返回真，否返回假</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare</span><span class="params">(seqStackFun <span class="built_in">stack</span>, DATA_TYPE x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (x == <span class="built_in">stack</span>.getTop())</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="主函数实现"><a href="#主函数实现" class="headerlink" title="主函数实现"></a>主函数实现</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare</span><span class="params">(seqStackFun <span class="built_in">stack</span>, DATA_TYPE x)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	DATA_TYPE data;</span><br><span class="line">	seqStackFun *myStack = <span class="keyword">new</span> seqStackFun();</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;请输入一串带括号的的字符串：&quot;</span>;</span><br><span class="line">	<span class="keyword">while</span> ((data = getchar() )!= <span class="string">&#x27;\n&#x27;</span>)<span class="comment">//回车结束</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">switch</span> (data)</span><br><span class="line">		&#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;&#123;&#x27;</span>:</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;(&#x27;</span>:</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;[&#x27;</span>:</span><br><span class="line">			myStack-&gt;push(data);		</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;&#125;&#x27;</span>:</span><br><span class="line">			<span class="keyword">if</span> (compare(*myStack, <span class="string">&#x27;&#123;&#x27;</span>))</span><br><span class="line">				myStack-&gt;pop();</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;]&#x27;</span>:</span><br><span class="line">			<span class="keyword">if</span>(compare(*myStack, <span class="string">&#x27;[&#x27;</span>))</span><br><span class="line">				myStack-&gt;pop();</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;)&#x27;</span>:</span><br><span class="line">			<span class="keyword">if</span> (compare(*myStack, <span class="string">&#x27;(&#x27;</span>))</span><br><span class="line">				myStack-&gt;pop();</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">default</span>:</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (myStack-&gt;isEmpty())</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;括号匹配正确&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;括号匹配不正确&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">delete</span> myStack;</span><br><span class="line">	system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="http://od191c801.bkt.clouddn.com/%E6%A0%88%E6%96%87%E7%AB%A02.png"></p>
+<p><img src="http://od191c801.bkt.clouddn.com/%E6%A0%88%E6%96%87%E7%AB%A01.png"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><blockquote>
+<p>参考自：<a href="http://blog.csdn.net/fansongy/article/details/6784919">http://blog.csdn.net/fansongy/article/details/6784919</a></p>
+</blockquote>
+<h3 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h3><blockquote>
+<ul>
+<li>博客：<a href="www.fumasterlin.com">fumasterlin.com</a></li>
+<li>邮箱：<a href="fumasterlin@163.com">fumasterlin@163.com</a></li>
+</ul>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/01/10/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<a id="more"></a>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>动态分配内存-四道题-你能做对吗？</title>
+    <url>/2016/09/12/%E5%8A%A8%E6%80%81%E5%88%86%E9%85%8D%E5%86%85%E5%AD%98-%E5%9B%9B%E9%81%93%E9%A2%98-%E4%BD%A0%E8%83%BD%E5%81%9A%E5%AF%B9%E5%90%97%EF%BC%9F/</url>
+    <content><![CDATA[<hr>
+<p>在CSDN上看到这样一篇文章，觉得很值得注意，值得分享下</p>
+<a id="more"></a>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><blockquote>
+<p>第一题：</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">GetMemory</span><span class="params">(<span class="keyword">char</span> *p)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    p = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>(<span class="number">100</span>);  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Test</span><span class="params">(<span class="keyword">void</span>)</span>   </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">char</span> *str = <span class="literal">NULL</span>;  </span><br><span class="line">    GetMemory(str);   </span><br><span class="line">    <span class="built_in">strcpy</span>(str, <span class="string">&quot;hello world&quot;</span>);  </span><br><span class="line">    <span class="built_in">printf</span>(str);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>第二题：</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">GetMemory</span><span class="params">(<span class="keyword">void</span>)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;     </span><br><span class="line">    <span class="keyword">char</span> p[] = <span class="string">&quot;hello world&quot;</span>;  </span><br><span class="line">    <span class="keyword">return</span> p;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Test</span><span class="params">(<span class="keyword">void</span>)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">char</span> *str = <span class="literal">NULL</span>;  </span><br><span class="line">    str = GetMemory();    </span><br><span class="line">    <span class="built_in">printf</span>(str);  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>第三题：</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">Void <span class="title">GetMemory</span><span class="params">(<span class="keyword">char</span> **p, <span class="keyword">int</span> num)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    *p = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>(num);  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Test</span><span class="params">(<span class="keyword">void</span>)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">char</span> *str = <span class="literal">NULL</span>;  </span><br><span class="line">    GetMemory(&amp;str, <span class="number">100</span>);  </span><br><span class="line">    <span class="built_in">strcpy</span>(str, <span class="string">&quot;hello&quot;</span>);     </span><br><span class="line">    <span class="built_in">printf</span>(str);      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>第四题：</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Test</span><span class="params">(<span class="keyword">void</span>)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">char</span> *str = (<span class="keyword">char</span> *) <span class="built_in">malloc</span>(<span class="number">100</span>);  </span><br><span class="line">    <span class="built_in">strcpy</span>(str, “hello”);  </span><br><span class="line">    <span class="built_in">free</span>(str);        </span><br><span class="line">    <span class="keyword">if</span>(str != <span class="literal">NULL</span>)  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="built_in">strcpy</span>(str, “world”);     </span><br><span class="line">        <span class="built_in">printf</span>(str);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p><strong>请问运行Test函数会有什么样的结果？？？</strong></p>
+<hr>
+<h3 id="分析解答"><a href="#分析解答" class="headerlink" title="分析解答"></a>分析解答</h3><h4 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h4><blockquote>
+<p>1、出错  2、出错  3、hello  4、world</p>
+</blockquote>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><blockquote>
+<ol>
+<li>函数传递的是<code>形参</code>。p是指针也白扯。为什么swap(int a, int b)函数不能将a，b交换呢？因为a和b只是函数的一个形参，<code>当函数执行完成，形参即销毁</code>。所以p就没了。地址、内存是分配了，但没传回来就销毁了，<code>str还是指向NULL</code>。<code>向strcpy传一个NULL指针</code>，一定是出错。</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>函数执行完即销毁。虽然在函数中分配了一块内存，并且也返回指针了，<code>可惜函数一结束，p就会销毁</code>，<strong>指针指向的栈空间会立刻被别的程序所占用。栈内的数据也就被替换掉了</strong>。所以也会出错，但和第一个不同。第一个是内存崩溃，第二个输出则会出现乱码。</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li>这个程序算是相对正确的了。函数传了指针str的地址，对其指向分配了内存空间。然后用strcpy赋值。输出都没有问题。<strong>但是最后没有释放内存，造成了内存泄露</strong>。</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="4">
+<li>这就涉及到free这个函数了。首先正常的动态分配内存。<strong>当程序调用free时，指针所指向的内容会被赋成0（大小应该为4字节，即4个\0，在linux上测的），但是指针位置不会移动，当然也就不会为空</strong>。有指针位置，就可以对堆内存进行操作了。所以strcpy可以成功执行，能输出world。<code>可见free()后不将指针置空是非常危险的</code>，因为此时并没有分配动态内存。</li>
+</ol>
+</blockquote>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><strong>引自：</strong><a href="http://blog.csdn.net/fansongy/article/details/6772127">http://blog.csdn.net/fansongy/article/details/6772127</a></p>
+<hr>
+<h3 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h3><blockquote>
+<ul>
+<li>博客：<a href="www.fumasterlin.com">fumasterlin.com</a></li>
+<li>邮箱：<a href="fumasterlin@163.com">fumasterlin@163.com</a></li>
+</ul>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法艺术之希尔排序</title>
+    <url>/2016/09/24/%E7%AE%97%E6%B3%95%E8%89%BA%E6%9C%AF%E4%B9%8B%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F/</url>
+    <content><![CDATA[<hr>
+<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><blockquote>
+<ul>
+<li><strong>希尔排序</strong>的实质就是<strong>分组插入排序</strong>，该方法又称缩小增量排序，因DL．Shell于1959年提出而得名。</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+
+
+
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><blockquote>
+<p>该方法的基本思想是：</p>
+<blockquote>
+<p>先将整个待排元素序列分割成若干个<strong>子序列</strong>（由相隔某个“增量”的元素组成的）分别进行<strong>直接插入排序</strong>，然后依次<strong>缩减增量</strong>再进行排序，待整个序列中的元素基本有序（增量足够小）时，再对全体元素进行一次直接插入排序</p>
+</blockquote>
+</blockquote>
+<h3 id="C语言实现代码"><a href="#C语言实现代码" class="headerlink" title="C语言实现代码"></a>C语言实现代码</h3><hr>
+<h4 id="按定义书写"><a href="#按定义书写" class="headerlink" title="按定义书写"></a>按定义书写</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">shellsort1</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j, gap;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (gap = n / <span class="number">2</span>; gap &gt; <span class="number">0</span>; gap /= <span class="number">2</span>) <span class="comment">//步长  </span></span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; gap; i++)        <span class="comment">//直接插入排序  </span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span> (j = i + gap; j &lt; n; j += gap)</span><br><span class="line">				<span class="keyword">if</span> (a[j] &lt; a[j - gap])</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="keyword">int</span> temp = a[j];</span><br><span class="line">					<span class="keyword">int</span> k = j - gap;</span><br><span class="line">					<span class="keyword">while</span> (k &gt;= <span class="number">0</span> &amp;&amp; a[k] &gt; temp)</span><br><span class="line">					&#123;</span><br><span class="line">						a[k + gap] = a[k];</span><br><span class="line">						k -= gap;</span><br><span class="line">					&#125;</span><br><span class="line">					a[k + gap] = temp;</span><br><span class="line">				&#125;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h4><blockquote>
+<p>很明显，上面的shellsort1代码虽然对直观的理解希尔排序有帮助，但代码量太大了，不够简洁清晰。因此进行下改进和优化:</p>
+<blockquote>
+<p>以第二次排序为例，原来是每次从1A到1E，从2A到2E，可以改成从1B开始，先和1A比较，然后取2B与2A比较，再取1C与前面自己组内的数据比较…….。这种每次从数组<strong>第gap个元素开始</strong>，每个元素与自己组内的数据进行直接插入排序显然也是正确的。</p>
+</blockquote>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">shellsort2</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> j, gap;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (gap = n / <span class="number">2</span>; gap &gt; <span class="number">0</span>; gap /= <span class="number">2</span>)</span><br><span class="line">		<span class="keyword">for</span> (j = gap; j &lt; n; j++)<span class="comment">//从数组第gap个元素开始  </span></span><br><span class="line">		&#123;</span><br><span class="line">		<span class="comment">//每个元素与自己组内的数据进行直接插入排序  </span></span><br><span class="line">			<span class="keyword">if</span> (a[j] &lt; a[j - gap])</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">int</span> temp = a[j];</span><br><span class="line">				<span class="keyword">int</span> k = j - gap;</span><br><span class="line">				<span class="keyword">while</span> (k &gt;= <span class="number">0</span> &amp;&amp; a[k] &gt; temp)</span><br><span class="line">				&#123;</span><br><span class="line">					a[k + gap] = a[k];</span><br><span class="line">					k -= gap;</span><br><span class="line">				&#125;</span><br><span class="line">				a[k + gap] = temp;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="再次改进"><a href="#再次改进" class="headerlink" title="再次改进"></a>再次改进</h4><blockquote>
+<p>再将直接插入排序的第三种方法来改写下：</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">shellsort3</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j, gap;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (gap = n / <span class="number">2</span>; gap &gt; <span class="number">0</span>; gap /= <span class="number">2</span>)</span><br><span class="line">		<span class="keyword">for</span> (i = gap; i &lt; n; i++)</span><br><span class="line">			<span class="keyword">for</span> (j = i - gap; j &gt;= <span class="number">0</span> &amp;&amp; a[j] &gt; a[j + gap]; j -= gap)</span><br><span class="line">				Swap(a[j], a[j + gap]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Wiki百科代码实现"><a href="#Wiki百科代码实现" class="headerlink" title="Wiki百科代码实现"></a>Wiki百科代码实现</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">shell_sort</span><span class="params">(<span class="keyword">int</span> arr[], <span class="keyword">int</span> len)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> gap, i, j;</span><br><span class="line">	<span class="keyword">int</span> temp;</span><br><span class="line">	<span class="comment">//步长gap=len/2。用右移效率更高</span></span><br><span class="line">	<span class="keyword">for</span> (gap = len &gt;&gt; <span class="number">1</span>; gap &gt; <span class="number">0</span>; gap &gt;&gt;= <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">for</span> (i = gap; i &lt; len; i++) </span><br><span class="line">		&#123;</span><br><span class="line">			temp = arr[i];</span><br><span class="line">			<span class="keyword">for</span> (j = i - gap; j &gt;= <span class="number">0</span> &amp;&amp; arr[j] &gt; temp; j -= gap)</span><br><span class="line">				arr[j + gap] = arr[j];</span><br><span class="line">			arr[j + gap] = temp;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><blockquote>
+<p><strong>注意：</strong>上面希尔排序的步长选择都是从n/2开始，每次再减半，直到最后为1</p>
+</blockquote>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><blockquote>
+<p>(1)CSDN：<a href="http://blog.csdn.net/morewindows/article/details/6668714">http://blog.csdn.net/morewindows/article/details/6668714</a></p>
+</blockquote>
+<blockquote>
+<p>(2)Wiki百科：<a href="https://zh.wikipedia.org/wiki/%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F">https://zh.wikipedia.org/wiki/%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F</a></p>
+</blockquote>
+<hr>
+<h3 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h3><blockquote>
+<ul>
+<li>博客：<a href="www.fumasterlin.com">fumasterlin.com</a></li>
+<li>邮箱：<a href="fumasterlin@163.com">fumasterlin@163.com</a></li>
+</ul>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法艺术之快速排序</title>
+    <url>/2016/09/23/%E7%AE%97%E6%B3%95%E8%89%BA%E6%9C%AF%E4%B9%8B%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/</url>
+    <content><![CDATA[<hr>
+<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><blockquote>
+<ol>
+<li>快速排序是C.R.A.Hoare于1962年提出的一种划分交换排序。它采用了<br>一种分治的策略，通常称其为分治法(Divide-and-ConquerMethod)。</li>
+</ol>
+</blockquote>
+<a id="more"></a>
+<blockquote>
+<ol start="2">
+<li>快速排序的最差时间复杂度和冒泡排序是一样的都是O(N2)，它的平均<br>时间复杂度为O(NlogN)。</li>
+</ol>
+</blockquote>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><blockquote>
+<p>该方法的基本思想是：</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>1．先从数列中取出一个数作为基准数。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>2．分区过程，将比这个数大的数全放到它的右边，小于或等于它的数全       放到它的左边。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>3．再对左右区间重复第二步，直到各区间只有一个数。(此处用到递归的思想)</p>
+</blockquote>
+</blockquote>
+<h3 id="C语言实现代码"><a href="#C语言实现代码" class="headerlink" title="C语言实现代码"></a>C语言实现代码</h3><hr>
+<h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">参数：数组，</span></span><br><span class="line"><span class="comment">left：数组的最左边位置一般为0</span></span><br><span class="line"><span class="comment">right：数组的最左边位置一般为N-1</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(<span class="keyword">int</span> *s, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j, temp,t;</span><br><span class="line">	<span class="keyword">if</span> (s==<span class="literal">NULL</span>||left &gt; right)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	temp = s[left];<span class="comment">//以最左边的数作为基准</span></span><br><span class="line">	i = left;</span><br><span class="line">	j = right;</span><br><span class="line">	<span class="keyword">while</span> (i &lt; j)<span class="comment">//当i和j重合的时候退出循环</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span> (i &lt; j&amp;&amp;temp &lt;= s[j])<span class="comment">//向左查找，找出小于基准的数</span></span><br><span class="line">			j--;</span><br><span class="line">		<span class="keyword">while</span> (i &lt; j&amp;&amp;temp &gt;= s[i])<span class="comment">//向右查找，找出大于基准的数</span></span><br><span class="line">			i++;</span><br><span class="line">		<span class="keyword">if</span> (i &lt; j)<span class="comment">//交换数据</span></span><br><span class="line">		&#123;</span><br><span class="line">			t = s[i];</span><br><span class="line">			s[i] = s[j];</span><br><span class="line">			s[j] = t;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//基准数归位</span></span><br><span class="line">	s[left] = s[i];</span><br><span class="line">	s[i] = temp;</span><br><span class="line">	<span class="comment">//递归调用</span></span><br><span class="line">	quickSort(s, i + <span class="number">1</span>, right);<span class="comment">//右边排序好</span></span><br><span class="line">	quickSort(s,left, i<span class="number">-1</span>);<span class="comment">//左边排序好</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="另一种方法（挖坑填数）"><a href="#另一种方法（挖坑填数）" class="headerlink" title="另一种方法（挖坑填数）"></a>另一种方法（挖坑填数）</h4><blockquote>
+<p>对挖坑填数进行总结:</p>
+</blockquote>
+<blockquote>
+<p>1．i =L; j = R; 将基准数挖出形成第一个坑a[i]。</p>
+</blockquote>
+<blockquote>
+<p>2．j--由后向前找比它小的数，找到后挖出此数填前一个坑a[i]中。</p>
+</blockquote>
+<blockquote>
+<p>3．i++由前向后找比它大的数，找到后也挖出此数填到前一个坑a[j]中。</p>
+</blockquote>
+<blockquote>
+<p>4．再重复执行2，3二步，直到i==j，将基准数填入a[i]中。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">参数：数组，</span></span><br><span class="line"><span class="comment">left：数组的最左边位置一般为0</span></span><br><span class="line"><span class="comment">right：数组的最左边位置一般为N-1</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quickSort2</span><span class="params">(<span class="keyword">int</span> *s, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j, temp, t;</span><br><span class="line">	<span class="keyword">if</span> (s == <span class="literal">NULL</span> || left &gt; right)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	temp = s[left];<span class="comment">//以最左边的数作为基准</span></span><br><span class="line">	i = left;</span><br><span class="line">	j = right;</span><br><span class="line">	<span class="keyword">while</span> (i &lt; j)<span class="comment">//当i和j重合的时候退出循环</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span> (i &lt; j&amp;&amp;temp &lt;= s[j])/向左查找，找出小于基准的数</span><br><span class="line">			j--;</span><br><span class="line">		s[i] = s[j];<span class="comment">//将s[j]填到s[i]中，s[j]就形成了一个新的坑</span></span><br><span class="line">		<span class="keyword">while</span> (i &lt; j&amp;&amp;temp &gt;= s[i])/向右查找，找出大于基准的数</span><br><span class="line">			i++;</span><br><span class="line">		s[j] = s[i];<span class="comment">//将s[i]填到s[j]中，s[i]就形成了一个新的坑 </span></span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	s[i] = temp;<span class="comment">//退出时，i等于j。将temp填到这个坑中。  </span></span><br><span class="line">	<span class="comment">//递归调用</span></span><br><span class="line">	quickSort(s, i + <span class="number">1</span>, right);<span class="comment">//右边排序好</span></span><br><span class="line">	quickSort(s,left, i<span class="number">-1</span>);<span class="comment">//左边排序好</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><blockquote>
+<p>第一种方法：<a href="http://developer.51cto.com/art/201403/430986.htm">http://developer.51cto.com/art/201403/430986.htm</a></p>
+</blockquote>
+<blockquote>
+<p>第二种方法（挖坑填数）：<a href="http://blog.csdn.net/morewindows/article/details/6684558">http://blog.csdn.net/morewindows/article/details/6684558</a></p>
+</blockquote>
+<blockquote>
+<p>Wiki百科：<a href="https://zh.wikipedia.org/wiki/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F">https://zh.wikipedia.org/wiki/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F</a></p>
+</blockquote>
+<hr>
+<h3 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h3><blockquote>
+<ul>
+<li>博客：<a href="www.fumasterlin.com">fumasterlin.com</a></li>
+<li>邮箱：<a href="fumasterlin@163.com">fumasterlin@163.com</a></li>
+</ul>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法艺术之归并排序</title>
+    <url>/2016/09/23/%E7%AE%97%E6%B3%95%E8%89%BA%E6%9C%AF%E4%B9%8B%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/</url>
+    <content><![CDATA[<hr>
+<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><blockquote>
+<ol>
+<li><strong>归并排序</strong>是建立在归并操作上的一种有效的排序算法。该算法是采用分&gt; 治法（Divide and Conquer）的一个非常典型的应用。</li>
+<li>复杂度为：<strong>O(n log n)</strong></li>
+</ol>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><blockquote>
+<p>首先考虑下如何将将二个有序数列合并。这个非常简单，只要从比较二个数列的第一个数，谁小就先取谁，取了后就在对应数列中删除这个数。然后再进行比较，如果有数列为空，那直接将另一个数列的数据依次取出即可。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//将两个有序数值合并成一个有序数组</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeArray</span><span class="params">(<span class="keyword">int</span> array1[], <span class="keyword">int</span> array2[], <span class="keyword">int</span> sizeArr1, <span class="keyword">int</span> sizeArr2, <span class="keyword">int</span> temp[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>, k = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (i &lt; sizeArr1 &amp;&amp; j &lt; sizeArr2)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (array1[i] &lt;= array2[j])</span><br><span class="line">			temp[k++] = array1[i++];</span><br><span class="line">		<span class="keyword">if</span> (array1[i] &gt;= array2[j])</span><br><span class="line">			temp[k++] = array2[j++];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span> (i &lt; sizeArr1)</span><br><span class="line">		temp[k++] = array1[i++];</span><br><span class="line">	<span class="keyword">while</span> (j &lt; sizeArr2)</span><br><span class="line">		temp[k++] = array2[j++];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>可以看出合并有序数列的效率是比较高的，可以达到**O(n)**。</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>解决了上面的合并有序数列问题，再来看归并排序，其的<strong>基本思路</strong>就是：<blockquote>
+<ul>
+<li>将数组分成二组A，B，如果这二组组内的数据都是有序的，那么就可以很方 便的将这二组数据进行排序。如何让这二组组内数据有序了？<blockquote>
+<ul>
+<li>可以将A，B组各自再分成二组。依次类推，当分出来的小组只有一个数据时，可以认为这个小组组内已经达到了有序，然后再合并相邻的二个小组 就可以了。这样通过先递归的分解数列，再合并数列就完成了归并排序。</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+<h3 id="C语言实现代码"><a href="#C语言实现代码" class="headerlink" title="C语言实现代码"></a>C语言实现代码</h3><hr>
+<h4 id="（1）"><a href="#（1）" class="headerlink" title="（1）"></a><strong>（1）</strong></h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//将有二个有序数列array[first...mid]和array[mid...last]合并。  </span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mergeArray</span><span class="params">(<span class="keyword">int</span> <span class="built_in">array</span>[], <span class="keyword">int</span> first, <span class="keyword">int</span> mid, <span class="keyword">int</span> last, <span class="keyword">int</span> temp[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = first, j = mid+<span class="number">1</span>, k = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> n = mid, m = last;</span><br><span class="line">	<span class="keyword">while</span> (i &lt;= n &amp;&amp; j &lt;= m)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">array</span>[i] &lt;= <span class="built_in">array</span>[j])</span><br><span class="line">			temp[k++] = <span class="built_in">array</span>[i++];</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			temp[k++] = <span class="built_in">array</span>[j++];	</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span> (i &lt;= n)</span><br><span class="line">		temp[k++] = <span class="built_in">array</span>[i++];</span><br><span class="line">	<span class="keyword">while</span> (j &lt;= m)</span><br><span class="line">		temp[k++] = <span class="built_in">array</span>[j++];</span><br><span class="line">	<span class="comment">//把排序好的数据给array[]</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; k; i++)</span><br><span class="line">		<span class="built_in">array</span>[first + i] = temp[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span> <span class="built_in">array</span>[], <span class="keyword">int</span> first, <span class="keyword">int</span> last, <span class="keyword">int</span> temp[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (first &lt; last)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> mid = (first + last) &gt;&gt; <span class="number">1</span>;<span class="comment">//(first + last) / 2;</span></span><br><span class="line">		<span class="comment">//递归调用</span></span><br><span class="line">		mergeSort(<span class="built_in">array</span>, first, mid, temp);<span class="comment">//左边有序</span></span><br><span class="line">		mergeSort(<span class="built_in">array</span>, mid + <span class="number">1</span>, last, temp);<span class="comment">//右边有序</span></span><br><span class="line">		mergeArray(<span class="built_in">array</span>, first, mid, last, temp);<span class="comment">//将两个有序数组合并	</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">MergeSort</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> *p = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line">	<span class="keyword">if</span> (p == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	mergeSort(a, <span class="number">0</span>, n - <span class="number">1</span>, p);</span><br><span class="line">	<span class="keyword">delete</span>[] p;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="（2）Wiki百科的实现代码"><a href="#（2）Wiki百科的实现代码" class="headerlink" title="（2）Wiki百科的实现代码"></a><strong>（2）Wiki百科的实现代码</strong></h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge_sort_recursive</span><span class="params">(<span class="keyword">int</span> arr[], <span class="keyword">int</span> reg[], <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (start &gt;= end)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">int</span> len = end - start, mid = (len &gt;&gt; <span class="number">1</span>) + start;</span><br><span class="line">	<span class="keyword">int</span> start1 = start, end1 = mid;</span><br><span class="line">	<span class="keyword">int</span> start2 = mid + <span class="number">1</span>, end2 = end;</span><br><span class="line">	<span class="comment">//递归</span></span><br><span class="line">	merge_sort_recursive(arr, reg, start1, end1);</span><br><span class="line">	merge_sort_recursive(arr, reg, start2, end2);</span><br><span class="line">	<span class="keyword">int</span> k = start;</span><br><span class="line">	<span class="keyword">while</span> (start1 &lt;= end1 &amp;&amp; start2 &lt;= end2)</span><br><span class="line">		reg[k++] = arr[start1] &lt; arr[start2] ? arr[start1++] : arr[start2++];</span><br><span class="line">	<span class="keyword">while</span> (start1 &lt;= end1)</span><br><span class="line">		reg[k++] = arr[start1++];</span><br><span class="line">	<span class="keyword">while</span> (start2 &lt;= end2)</span><br><span class="line">		reg[k++] = arr[start2++];</span><br><span class="line">	<span class="keyword">for</span> (k = start; k &lt;= end; k++)</span><br><span class="line">		arr[k] = reg[k];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge_sort</span><span class="params">(<span class="keyword">int</span> arr[], <span class="keyword">const</span> <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> reg[len];</span><br><span class="line">	merge_sort_recursive(arr, reg, <span class="number">0</span>, len - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><blockquote>
+<p>(1)CSDN：<a href="http://blog.csdn.net/morewindows/article/details/6678165">http://blog.csdn.net/morewindows/article/details/6678165</a></p>
+</blockquote>
+<blockquote>
+<p>(2)Wiki百科：<a href="https://zh.wikipedia.org/wiki/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F#C.E8.AA.9E.E8.A8.80">https://zh.wikipedia.org/wiki/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F#C.E8.AA.9E.E8.A8.80</a></p>
+</blockquote>
+<hr>
+<h3 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h3><blockquote>
+<ul>
+<li>博客：<a href="www.fumasterlin.com">fumasterlin.com</a></li>
+<li>邮箱：<a href="fumasterlin@163.com">fumasterlin@163.com</a></li>
+</ul>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法艺术之排序学习心得And总结</title>
+    <url>/2016/09/24/%E7%AE%97%E6%B3%95%E8%89%BA%E6%9C%AF%E4%B9%8B%E6%8E%92%E5%BA%8F%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97And%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<hr>
+<p>看了一天的排序算法，头都大啦<br>算法真心不容易啊<br>今儿看了啥？？？</p>
+<blockquote>
+<ul>
+<li>快速排序</li>
+</ul>
+</blockquote>
+<ul>
+<li>归并排序</li>
+<li>插入排序</li>
+<li>希尔排序</li>
+</ul>
+<a id="more"></a>
+
+<ul>
+<li>都是排序。。有点小乱，趁着今晚把学到的这四个排序算法都更新到了博客里，真是高产啊今天~</li>
+<li>参考了很多网上的资料，主要还是CSDN和Wiki，发现Wiki上面的代码质量好像都很不错！值得学习</li>
+<li>觉得还是写个总结比较合适点，毕竟花了这么长时间了对吧</li>
+<li>好！现在本宝宝要开始总结了~</li>
+</ul>
+<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a><strong>快速排序</strong></h3><blockquote>
+<p>该方法的基本思想是：</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>1．先从数列中取出一个数作为基准数。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>2．分区过程，将比这个数大的数全放到它的右边，小于或等于它的数全       放到它的左边。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>3．再对左右区间重复第二步，直到各区间只有一个数。(此处用到递归的思想)</p>
+</blockquote>
+</blockquote>
+<h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a><strong>归并排序</strong></h3><blockquote>
+<ul>
+<li>用到了分治法</li>
+</ul>
+</blockquote>
+<ul>
+<li>将一组不断的二分，直道每个序列只有一个数，可看成是有序序列</li>
+<li>然后利用将二个有序数列合并的思想完成排序</li>
+<li>运用到递归的思想</li>
+</ul>
+<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a><strong>插入排序</strong></h3><blockquote>
+<p>一般来说，插入排序都采用in-place在数组上实现。具体算法描述如下：</p>
+<blockquote>
+<ol>
+<li>从第一个元素开始，该元素可以认为已经被排序</li>
+<li>取出下一个元素，在已经排序的元素序列中<strong>从后向前扫描</strong></li>
+<li>如果该元素（已排序）大于新元素，将该元素移到下一位置</li>
+<li>重复步骤3，直到找到已排序的元素小于或者等于新元素的位置</li>
+<li>将新元素插入到该位置后</li>
+<li>重复步骤2~5</li>
+</ol>
+</blockquote>
+</blockquote>
+<h3 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a><strong>希尔排序</strong></h3><blockquote>
+<p>该方法的基本思想是：</p>
+<blockquote>
+<p>先将整个待排元素序列分割成若干个<strong>子序列</strong>（由相隔某个“增量”的元素组成的）分别进行<strong>直接插入排序</strong>，然后依次<strong>缩减增量</strong>再进行排序，待整个序列中的元素基本有序（增量足够小）时，再对全体元素进行一次直接插入排序</p>
+</blockquote>
+</blockquote>
+<h3 id="寄语"><a href="#寄语" class="headerlink" title="寄语"></a><strong>寄语</strong></h3><ul>
+<li>工作还未找到，还不能够懈怠，还有很多不会的呢！</li>
+<li>要好好加油了，不然找不到工作就好笑了！！！</li>
+<li>明天不看算法了  烧脑！</li>
+<li>看看数据结构吧</li>
+<li>这也很烧脑啊<del>我滴天</del></li>
+</ul>
+<h3 id="晚-安"><a href="#晚-安" class="headerlink" title="晚 安 ~"></a><strong>晚 安 ~</strong></h3><hr>
+<h3 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h3><blockquote>
+<ul>
+<li>博客：<a href="www.fumasterlin.com">fumasterlin.com</a></li>
+<li>邮箱：<a href="fumasterlin@163.com">fumasterlin@163.com</a></li>
+</ul>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>清新之比</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法艺术之插入排序</title>
+    <url>/2016/09/23/%E7%AE%97%E6%B3%95%E8%89%BA%E6%9C%AF%E4%B9%8B%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F/</url>
+    <content><![CDATA[<hr>
+<p><strong>在了解希尔排序前，先看看插入排序~</strong></p>
+<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><blockquote>
+<ul>
+<li><strong>插入排序</strong>（英语：Insertion Sort）是一种简单直观的排序算法。它的工作原理是通过构建<strong>有序序列</strong>，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入.</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+<blockquote>
+<ul>
+<li>插入排序在实现上，通常采用in-place排序（即只需用到O(1)的额外空间的排序），因而在<strong>从后向前</strong>扫描过程中，需要反复把已排序元素逐步向后挪位，为最新元素提供插入空间。</li>
+</ul>
+</blockquote>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><hr>
+<h4 id="Wiki百科思路描述"><a href="#Wiki百科思路描述" class="headerlink" title="Wiki百科思路描述"></a>Wiki百科思路描述</h4><blockquote>
+<p>一般来说，插入排序都采用in-place在数组上实现。具体算法描述如下：</p>
+<blockquote>
+<ol>
+<li>从第一个元素开始，该元素可以认为已经被排序</li>
+<li>取出下一个元素，在已经排序的元素序列中从后向前扫描</li>
+<li>如果该元素（已排序）大于新元素，将该元素移到下一位置</li>
+<li>重复步骤3，直到找到已排序的元素小于或者等于新元素的位置</li>
+<li>将新元素插入到该位置后</li>
+<li>重复步骤2~5</li>
+</ol>
+</blockquote>
+</blockquote>
+<h4 id="白话描述"><a href="#白话描述" class="headerlink" title="白话描述"></a>白话描述</h4><blockquote>
+<p>设数组为a[0…n-1]</p>
+<blockquote>
+<ol>
+<li>初始时，a[0]自成1个有序区，无序区为a[1..n-1]。令i=1</li>
+<li>将a[i]并入当前的有序区a[0…i-1]中形成a[0…i]的有序区间。</li>
+<li>i++并重复第二步直到i==n-1。排序完成。</li>
+</ol>
+</blockquote>
+</blockquote>
+<h3 id="C语言实现代码"><a href="#C语言实现代码" class="headerlink" title="C语言实现代码"></a>C语言实现代码</h3><hr>
+<h4 id="按定义书写"><a href="#按定义书写" class="headerlink" title="按定义书写"></a>按定义书写</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Insertsort1</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j, k;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//为a[i]在前面的a[0...i-1]有序区间中找一个合适的位置  </span></span><br><span class="line">		<span class="keyword">for</span> (j = i - <span class="number">1</span>; j &gt;= <span class="number">0</span>; j--)</span><br><span class="line">			<span class="keyword">if</span> (a[j] &lt; a[i])</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//如找到了一个合适的位置  </span></span><br><span class="line">		<span class="keyword">if</span> (j != i - <span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//将比a[i]大的数据向后移  </span></span><br><span class="line">			<span class="keyword">int</span> temp = a[i];</span><br><span class="line">			<span class="keyword">for</span> (k = i - <span class="number">1</span>; k &gt; j; k--)</span><br><span class="line">				a[k + <span class="number">1</span>] = a[k];</span><br><span class="line">			<span class="comment">//将a[i]放到正确位置上  </span></span><br><span class="line">			a[k + <span class="number">1</span>] = temp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h4><blockquote>
+<ul>
+<li>现在进行一下改写，将搜索和数据后移这二个步骤合并。</li>
+<li>即每次a[i]先和前面一个数据a[i-1]比较</li>
+<li>如果a[i] &gt; a[i-1]说明a[0…i]也是有序的，无须调整。</li>
+<li>否则就令j=i-1,temp=a[i]。</li>
+<li>然后一边将数据a[j]向后移动一边向前搜索，当有数据a[j] &lt; a[i]时停止并将temp放到a[j + 1]处。</li>
+</ul>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Insertsort2</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; n; i++)</span><br><span class="line">		<span class="keyword">if</span> (a[i] &lt; a[i - <span class="number">1</span>])</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> temp = a[i];</span><br><span class="line">			<span class="keyword">for</span> (j = i - <span class="number">1</span>; j &gt;= <span class="number">0</span> &amp;&amp; a[j] &gt; temp; j--)</span><br><span class="line">				a[j + <span class="number">1</span>] = a[j];</span><br><span class="line">			a[j + <span class="number">1</span>] = temp;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="再次改进"><a href="#再次改进" class="headerlink" title="再次改进"></a>再次改进</h4><blockquote>
+<ul>
+<li>再对将a[j]插入到前面a[0…j-1]的有序区间所用的方法进行改写</li>
+<li>用数据交换代替数据后移。</li>
+<li>如果a[j]前一个数据a[j-1]&gt;a[j]，就交换a[j]和a[j-1]，再j--直到a[j-1] &lt;= a[j]。这样也可以实现将一个新数据新并入到有序区间。</li>
+</ul>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Insertsort3</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; n; i++)</span><br><span class="line">		<span class="keyword">for</span> (j = i - <span class="number">1</span>; j &gt;= <span class="number">0</span> &amp;&amp; a[j] &gt; a[j + <span class="number">1</span>]; j--)</span><br><span class="line">			Swap(a[j], a[j + <span class="number">1</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Wiki百科代码实现"><a href="#Wiki百科代码实现" class="headerlink" title="Wiki百科代码实现"></a>Wiki百科代码实现</h4><blockquote>
+<ul>
+<li>Wiki百科和上诉的第二个代码相同</li>
+<li>也偶网友证明说第二个代码的效率最高</li>
+</ul>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insertion_sort</span><span class="params">(<span class="keyword">int</span> arr[], <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j;</span><br><span class="line">	<span class="keyword">int</span> temp;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; len; i++) &#123;</span><br><span class="line">		temp = arr[i]; <span class="comment">//與已排序的數逐一比較，大於temp時，該數向後移</span></span><br><span class="line">		<span class="keyword">for</span> (j = i - <span class="number">1</span>; j &gt;= <span class="number">0</span> &amp;&amp; arr[j] &gt; temp; j--) <span class="comment">//j循环到-1时，由于[[短路求值]](http://zh.wikipedia.org/wiki/短路求值)，不会运算array[-1]</span></span><br><span class="line">			arr[j + <span class="number">1</span>] = arr[j];</span><br><span class="line">		</span><br><span class="line">                arr[j+<span class="number">1</span>] = temp; <span class="comment">//被排序数放到正确的位置</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><blockquote>
+<p>(1)CSDN：<a href="http://blog.csdn.net/morewindows/article/details/6665714">http://blog.csdn.net/morewindows/article/details/6665714</a></p>
+</blockquote>
+<blockquote>
+<p>(2)Wiki百科：<a href="https://zh.wikipedia.org/wiki/%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F#C.E8.AF.AD.E8.A8.80">https://zh.wikipedia.org/wiki/%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F#C.E8.AF.AD.E8.A8.80</a></p>
+</blockquote>
+<hr>
+<h3 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h3><blockquote>
+<ul>
+<li>博客：<a href="www.fumasterlin.com">fumasterlin.com</a></li>
+<li>邮箱：<a href="fumasterlin@163.com">fumasterlin@163.com</a></li>
+</ul>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>字符串的一些库函数实现代码</title>
+    <url>/2016/10/08/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BA%93%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81/</url>
+    <content><![CDATA[<hr>
+<h2 id="关于字符串的一些库函数的实现"><a href="#关于字符串的一些库函数的实现" class="headerlink" title="关于字符串的一些库函数的实现"></a>关于字符串的一些库函数的实现</h2><hr>
+<blockquote>
+<ul>
+<li>字符串转成整型数</li>
+<li>整型数转成字符串</li>
+<li>字符串复制 strcpy函数实现</li>
+<li>内存复制 memcpy函数实现</li>
+<li>计算字符串长度strlen的实现</li>
+<li>字符串比较strcmp的实现</li>
+<li>字符串中子串的查找strstr的实现</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="字符串转成整型数"><a href="#字符串转成整型数" class="headerlink" title="字符串转成整型数"></a>字符串转成整型数</h3><p>将str转成int类型返回</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//ASCII转换成int</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">asciiToInt</span><span class="params">(<span class="keyword">char</span>* str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> value=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">char</span> ptr = *str;</span><br><span class="line">	<span class="keyword">if</span>(*str == <span class="string">&#x27;-&#x27;</span> || *str == <span class="string">&#x27;+&#x27;</span>)</span><br><span class="line">		str++;</span><br><span class="line">	<span class="keyword">while</span>(*str &gt;= <span class="string">&#x27;0&#x27;</span>&amp;&amp; *str &lt;= <span class="string">&#x27;9&#x27;</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		value *= <span class="number">10</span>;</span><br><span class="line">		value += *str - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">		str++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(ptr == <span class="string">&#x27;-&#x27;</span>)</span><br><span class="line">		value = -value;</span><br><span class="line">	<span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="整型数转成字符串"><a href="#整型数转成字符串" class="headerlink" title="整型数转成字符串"></a>整型数转成字符串</h3><p>将value转成字符并打印出来</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//int转换成ASCII并输出</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">binaryToAscii</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> quotient;</span><br><span class="line">	<span class="keyword">char</span>* s;</span><br><span class="line">	quotient=value/<span class="number">10</span>;</span><br><span class="line">	<span class="keyword">if</span>(quotient != <span class="number">0</span>)</span><br><span class="line">		binaryToAscii(quotient);</span><br><span class="line">	<span class="built_in">putchar</span>(value%<span class="number">10</span>+<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="字符串复制-strcpy函数实现"><a href="#字符串复制-strcpy函数实现" class="headerlink" title="字符串复制 strcpy函数实现"></a>字符串复制 strcpy函数实现</h3><p>将src复制到dest中去</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span>* <span class="title">strcpy</span><span class="params">(<span class="keyword">char</span> *dest, <span class="keyword">const</span> <span class="keyword">char</span> *src)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(dest==<span class="literal">NULL</span> || scr==<span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">char</span>* destCopy = dest;</span><br><span class="line">	<span class="keyword">while</span>((*dest++ = *src++)!=<span class="string">&#x27;\0&#x27;</span>);</span><br><span class="line">	<span class="keyword">return</span> destCopy;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="内存复制-memcpy函数实现"><a href="#内存复制-memcpy函数实现" class="headerlink" title="内存复制 memcpy函数实现"></a>内存复制 memcpy函数实现</h3><p>指定memFrom中的size字节的内容复制到memTo中去</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">memcpy</span><span class="params">(<span class="keyword">void</span> *memTo, <span class="keyword">const</span> <span class="keyword">void</span> *memFrom, <span class="keyword">size_t</span> size)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(memTo == <span class="literal">NULL</span> || memFrom == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">char</span>* memToCpy=(<span class="keyword">char</span>*)memTo;</span><br><span class="line">	<span class="keyword">char</span>* memFromCpy=(<span class="keyword">char</span>*)memFrom;</span><br><span class="line">	<span class="keyword">while</span>(size--)</span><br><span class="line">		*memToCpy++ = *memFromCpy++;</span><br><span class="line">	<span class="keyword">return</span> memTo;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="计算字符串长度strlen的实现"><a href="#计算字符串长度strlen的实现" class="headerlink" title="计算字符串长度strlen的实现"></a>计算字符串长度strlen的实现</h3><p>返回src中的字节数，不包括’\0’</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">strlen</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *scr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	assert(scr != <span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">char</span> *p = scr;</span><br><span class="line">	<span class="keyword">while</span>(*scr++ != <span class="string">&#x27;\0&#x27;</span>);</span><br><span class="line">	<span class="keyword">return</span> (scr-p<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="字符串比较strcmp的实现"><a href="#字符串比较strcmp的实现" class="headerlink" title="字符串比较strcmp的实现"></a>字符串比较strcmp的实现</h3><p>比较src和dest两个字符串，src==dest 返回0,src&gt;dest返回1，src &lt; dest返回-1</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_strcmp</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* src,<span class="keyword">const</span> <span class="keyword">char</span>* dest)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(*dest &amp;&amp; !(ret=*(<span class="keyword">unsigned</span> <span class="keyword">char</span>*)src-*(<span class="keyword">unsigned</span> <span class="keyword">char</span>*)dest))</span><br><span class="line">	&#123;</span><br><span class="line">		src++;</span><br><span class="line">		dest++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(ret&lt;<span class="number">0</span>)</span><br><span class="line">		ret=<span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(ret&gt;<span class="number">0</span>)</span><br><span class="line">		ret=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="字符串中子串的查找strstr的实现"><a href="#字符串中子串的查找strstr的实现" class="headerlink" title="字符串中子串的查找strstr的实现"></a>字符串中子串的查找strstr的实现</h3><p>在src中查到和sub相同的子串，并返回第一次出现的地址</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">char</span>* <span class="title">my_strstr</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* src,<span class="keyword">const</span> <span class="keyword">char</span>* sub)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">char</span>* bp;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">char</span>* sp;</span><br><span class="line">	<span class="keyword">if</span>(src==<span class="literal">NULL</span> || sub==<span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">while</span>(*src)</span><br><span class="line">	&#123;</span><br><span class="line">		bp=src;</span><br><span class="line">		sp=sub;</span><br><span class="line">		<span class="keyword">while</span>(*bp==*sp)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(*sp)</span><br><span class="line">				<span class="keyword">return</span> src;</span><br><span class="line">			bp++;</span><br><span class="line">			sp++;</span><br><span class="line">		&#125;</span><br><span class="line">		src++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h3><blockquote>
+<ul>
+<li>博客：<a href="www.fumasterlin.com">fumasterlin.com</a></li>
+<li>邮箱：<a href="fumasterlin@163.com">fumasterlin@163.com</a></li>
+</ul>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>C语言</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>隐式类型转换</title>
+    <url>/2016/09/12/%E9%9A%90%E5%BC%8F%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/</url>
+    <content><![CDATA[<hr>
+<h2 id="隐式类型转换"><a href="#隐式类型转换" class="headerlink" title="隐式类型转换"></a>隐式类型转换</h2><p><strong>隐式类型转换分三种</strong>：</p>
+<blockquote>
+<ol>
+<li>算术转换</li>
+<li>赋值转换</li>
+<li>输出转换</li>
+</ol>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="算术转换"><a href="#算术转换" class="headerlink" title="算术转换"></a>算术转换</h3><p>进行算术运算（加、减、乘、除、取余以及符号运算）时，不同类型数招必须转换成<code>同一类型</code>的数据才能运算，算术转换原则为：</p>
+<p><strong>整型提升：</strong> 对于所有比int小的类型，包括char, signed char, unsigned char, short, unsigned short,首先会提升为int类型。</p>
+<p>在进行运算时，以表达式中<code>最长类型为主</code>，将其他类型位据均转换成该类型，如：</p>
+<blockquote>
+<p>(1)若运算数中有double型或float型，则其他类型数据均转换成double类型进行运算。</p>
+<p>(2)若运算数中最长的类型为long型．则其他类型数均转换成long型数。</p>
+<p>(3)若运算数中最长类型为int型，则char型也转换成int型进行运算。算术转换是在运算过程中自动完成的。</p>
+</blockquote>
+<p><strong>特别注意的是有符号和无符号之间的转换：</strong></p>
+<blockquote>
+<p>(1)包含long与unsigned int,32位机器上都是<code>4字节</code>，所以均转换为unsigned long.</p>
+</blockquote>
+<blockquote>
+<p>(2)包含signed与unsigned int，<code>signed会转换为unsigned</code>。如果int恰好为负数，其结果为对unsigned取值个数求模的结果。比如将-1赋给8位的unsigned char，那么结果就是255。unsigned char取值范围0~255。</p>
+</blockquote>
+<p><strong>注意：</strong>在进行自动类型转换的时候，如果原来的数是无符号数，那么在扩展的时候，高位填充的是0；如果是有符号数，那么高位填充的时符号位！</p>
+<h3 id="赋值转换"><a href="#赋值转换" class="headerlink" title="赋值转换"></a>赋值转换</h3><p><strong>进行<code>赋值</code>操作时，<code>赋值运算符右边的数据类型必须转换成赋值号左边的类型</code>，若右边的数据类型的长度大于左边，则要进行截断或舍入操作</strong>。</p>
+<p>下面用一实例说明：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">char</span> ch;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> i,result;</span><br><span class="line"></span><br><span class="line"><span class="keyword">float</span> f;</span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> d;</span><br><span class="line"></span><br><span class="line">result=ch/i+(f*d-i);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>(1)首先计算 ch/i,ch → int型，ch/i → int型。</p>
+<p>(2)接着计算 f*d-i，由于最长型为double型，故f→double型，i→double型，f*d-i→double型。</p>
+<p>(3)(ch/i)和(f*d-i)进行加运算，由于f*d-i为double型，故ch/i→double型，ch/i+(f*d-i)→double型。</p>
+<p>(4)由于result为int型，故ch/i+(f*d-i)→double→int，即进行截断与舍入，最后取值为整型。</p>
+</blockquote>
+<h3 id="输出转换"><a href="#输出转换" class="headerlink" title="输出转换"></a>输出转换</h3><blockquote>
+<p>在程序中将数据用printf函数以指定格式输出时，当要输出的盐据类型与输出格式不符时，便自动进行类型转换，如一个long型数据用整型格式(%d)输出时，则相当于将long型转换成整型(int)数据输出；一个字符(char）型数据用整型格式输出时，相当于将char型转 换成int型输出。</p>
+</blockquote>
+<p><strong>注意：</strong> 较长型数据转换成短型数据输出时，其值不能超出短型数据允许的值范围，否则 转换时将出错。</p>
+<p>输出的数据类型与输出格式不符时常常发生错误，如：</p>
+<pre><code>int d=9;
+printf(&quot;%f&quot;,d);</code></pre>
+<p>或</p>
+<pre><code>float c=3.2;
+printf(&quot;%d&quot;,c);</code></pre>
+<p>将产生错误的结果。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><strong>参考自：</strong><a href="http://blog.csdn.net/hanchaoman/article/details/7827031">http://blog.csdn.net/hanchaoman/article/details/7827031</a></p>
+<hr>
+<h2 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h2><blockquote>
+<ul>
+<li>博客：<a href="www.fumasterlin.com">fumasterlin.com</a></li>
+<li>邮箱：<a href="fumasterlin@163.com">fumasterlin@163.com</a></li>
+</ul>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>线性顺序表的实现（C语言版）</title>
+    <url>/2016/09/09/%E7%BA%BF%E6%80%A7%E9%A1%BA%E5%BA%8F%E8%A1%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%88C%E8%AF%AD%E8%A8%80%E7%89%88%EF%BC%89/</url>
+    <content><![CDATA[<hr>
+<h1 id="顺序表描述"><a href="#顺序表描述" class="headerlink" title="顺序表描述"></a><strong>顺序表描述</strong></h1><p>去年学习了一些数据结构，其中最简单的就是顺序线性表。目前刚搭建好了这个平台，于是想来记录一番。</p>
+<blockquote>
+<p>顺序表是在计算机内存中以<strong>数组</strong>的形式保存的<strong>线性表</strong>，是指用一组地址连续的存储单元依次存储数据元素的线性结构。线性表采用顺序存储的方式存储就称之为顺序表。顺序表是将表中的结点依次存放在计算机内存中一组地址连续的存储单元中。</p>
+</blockquote>
+<a id="more"></a>
+
+<h1 id="顺序表实现"><a href="#顺序表实现" class="headerlink" title="顺序表实现"></a><strong>顺序表实现</strong></h1><h2 id="顺序表的初始化"><a href="#顺序表的初始化" class="headerlink" title="顺序表的初始化"></a>顺序表的初始化</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> elemType;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> posType;</span><br><span class="line"><span class="comment">//初始化一个结构体</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">List</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	elemType *<span class="built_in">list</span>;<span class="comment">//元素类型指针，类似数组</span></span><br><span class="line">	<span class="keyword">int</span> size;<span class="comment">//数据个数</span></span><br><span class="line">	<span class="keyword">int</span> maxSize;<span class="comment">//顺序表大小</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">/*参数ms：初始化顺序表的大小*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initList</span><span class="params">(struct List *L , <span class="keyword">int</span> ms)</span><span class="comment">//初始化顺序表</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(ms &lt;= <span class="number">0</span>)<span class="comment">//参数合理性判断</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;MaxSize 非法！ &quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	L-&gt;maxSize = ms;</span><br><span class="line">	L-&gt;size = <span class="number">0</span>;</span><br><span class="line">	L-&gt;<span class="built_in">list</span> = <span class="built_in">malloc</span>(ms*<span class="keyword">sizeof</span>(elemType));<span class="comment">//分配内存</span></span><br><span class="line">	<span class="keyword">if</span>(!L-&gt;<span class="built_in">list</span> )<span class="comment">//分配内存意外情况处理</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;空间分配失败！&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="开辟内存"><a href="#开辟内存" class="headerlink" title="开辟内存"></a>开辟内存</h2><blockquote>
+<p>realloc()可以对<strong>给定的指针</strong>所指的空间进行扩大或者缩小，无论是扩张或是缩小，<code>原有内存的中内容将保持不变</code>.当然，对于缩小，则被缩小的那一部分的内容会丢失.realloc并不保证调整后的内存空间和原来的内存空间保持同一内存地址.相反，<code>realloc返回的指针很可能指向一个新的地址</code>.</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">againMalloc</span><span class="params">(struct List*L)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//开辟两倍于当前顺序表大小的内存</span></span><br><span class="line">	elemType *p = <span class="built_in">realloc</span>(L-&gt;<span class="built_in">list</span> ,<span class="number">2</span>*L-&gt;maxSize *<span class="keyword">sizeof</span>(elemType));</span><br><span class="line">	<span class="keyword">if</span>(!p)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;储存空间分配失败！&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	L-&gt;<span class="built_in">list</span> = p;</span><br><span class="line">	L-&gt;maxSize = <span class="number">2</span>*L-&gt;maxSize ;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="插入数据操作"><a href="#插入数据操作" class="headerlink" title="插入数据操作"></a>插入数据操作</h2><h3 id="从表头插入数据"><a href="#从表头插入数据" class="headerlink" title="从表头插入数据"></a>从表头插入数据</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insertFirstList</span><span class="params">(struct List *L, elemType x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="comment">//判断如果目前表中数据个数达到顺序表的最大size，则再次分配内存</span></span><br><span class="line">	<span class="keyword">if</span>(L-&gt;size == L-&gt;maxSize )</span><br><span class="line">	&#123;</span><br><span class="line">		againMalloc(L);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//把表中每个数据往后移动</span></span><br><span class="line">	<span class="keyword">for</span>(i = L-&gt;size<span class="number">-1</span>; i&gt;=<span class="number">0</span>; i--)</span><br><span class="line">	&#123;</span><br><span class="line">		L-&gt;<span class="built_in">list</span>[i+<span class="number">1</span>] = L-&gt;<span class="built_in">list</span>[i];</span><br><span class="line">	&#125;</span><br><span class="line">	L-&gt;<span class="built_in">list</span>[<span class="number">0</span>] = x;<span class="comment">//表头插入数据</span></span><br><span class="line">	L-&gt;size ++;<span class="comment">//数据个数加1</span></span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="从表尾插入数据"><a href="#从表尾插入数据" class="headerlink" title="从表尾插入数据"></a>从表尾插入数据</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insertLastList</span><span class="params">(struct List *L, elemType x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//判断如果目前表中数据个数达到顺序表的最大size，则再次分配内存</span></span><br><span class="line">	<span class="keyword">if</span>(L-&gt;size == L-&gt;maxSize )</span><br><span class="line">	&#123;</span><br><span class="line">		againMalloc(L);</span><br><span class="line">	&#125;</span><br><span class="line">	L-&gt;<span class="built_in">list</span> [L-&gt;size ] = x;<span class="comment">//表尾插入数据</span></span><br><span class="line">	L-&gt;size ++;<span class="comment">//数据个数加1</span></span><br><span class="line">	<span class="keyword">return</span>;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="从表中某个位置插入数据"><a href="#从表中某个位置插入数据" class="headerlink" title="从表中某个位置插入数据"></a>从表中某个位置插入数据</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">pos:要插入数据的位置；</span></span><br><span class="line"><span class="comment">x  :要插入的数据</span></span><br><span class="line"><span class="comment">插入成功返回1，失败返回0；</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insertPosList</span><span class="params">(struct List *L,<span class="keyword">int</span> pos, elemType x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">if</span>(pos &lt; <span class="number">1</span> || pos &gt; L-&gt;size )<span class="comment">//输入位置合理性判断</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//判断如果目前表中数据个数达到顺序表的最大size，则再次分配内存</span></span><br><span class="line">	<span class="keyword">if</span>(L-&gt;size == L-&gt;maxSize )</span><br><span class="line">	&#123;</span><br><span class="line">		againMalloc(L);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//把要插入数据的位置上数据以及之后的数据，都往后移动一个位置</span></span><br><span class="line">	<span class="keyword">for</span>(i = L-&gt;size<span class="number">-1</span>; i&gt;=pos<span class="number">-1</span>; i--)</span><br><span class="line">	&#123;</span><br><span class="line">		L-&gt;<span class="built_in">list</span> [i+<span class="number">1</span>] = L-&gt;<span class="built_in">list</span> [i];</span><br><span class="line">	&#125;</span><br><span class="line">	L-&gt;<span class="built_in">list</span> [pos<span class="number">-1</span>] = x;<span class="comment">//当前位置插入数据</span></span><br><span class="line">	L-&gt;size ++;<span class="comment">//数据个数加1</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;<span class="comment">//插入成功则返回1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="删除数据操作"><a href="#删除数据操作" class="headerlink" title="删除数据操作"></a>删除数据操作</h2><h3 id="从表头删除数据"><a href="#从表头删除数据" class="headerlink" title="从表头删除数据"></a>从表头删除数据</h3><p>从表头删除数据的操作即：把第一个数据之后的数据都往前移动一个位置，由此把表头的数据给顶出去</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*删除成功则返回被删除的数据*/</span></span><br><span class="line"><span class="function">elemType <span class="title">deleteFirstList</span><span class="params">(struct List *L)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	elemType temp;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">if</span>(L-&gt;size == <span class="number">0</span>)<span class="comment">//合理性判断</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;线性表为空，不能进行删除操作！&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	temp = L-&gt;<span class="built_in">list</span> [<span class="number">0</span>];</span><br><span class="line">	<span class="comment">//把第一个数据之后的数据都往前移动一个位置</span></span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">1</span> ; i &lt; L-&gt;size ; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		L-&gt;<span class="built_in">list</span> [i<span class="number">-1</span>] = L-&gt;<span class="built_in">list</span> [i];</span><br><span class="line">	&#125;</span><br><span class="line">	L-&gt;size --;<span class="comment">//数据个数-1</span></span><br><span class="line">	<span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="从表尾删除数据"><a href="#从表尾删除数据" class="headerlink" title="从表尾删除数据"></a>从表尾删除数据</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*删除成功则返回被删除的数据*/</span></span><br><span class="line"><span class="function">elemType <span class="title">deleteLastList</span><span class="params">(struct List *L)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	elemType temp;</span><br><span class="line">	<span class="keyword">if</span>(L-&gt;size == <span class="number">0</span>)<span class="comment">//合理性判断</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;线性表为空，不能进行删除操作！&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	temp = L-&gt;<span class="built_in">list</span>[L-&gt;size ];<span class="comment">//删除表尾数据</span></span><br><span class="line">	L-&gt;size --;<span class="comment">//数据个数-1</span></span><br><span class="line">	<span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="删除表中某个位置的数据"><a href="#删除表中某个位置的数据" class="headerlink" title="删除表中某个位置的数据"></a>删除表中某个位置的数据</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">pos：要删除数据的位置</span></span><br><span class="line"><span class="comment">说明：此位置已经转换成我们日常所习惯的位置，从1开始，而不是0开始</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">elemType <span class="title">deletePosList</span><span class="params">(struct List *L, <span class="keyword">int</span> pos)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	elemType temp;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">if</span>(pos &lt; <span class="number">1</span> || pos &gt; L-&gt;size )<span class="comment">//合理性判断</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;pos越界，不能进行删除操作！&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//把pos之后的所有数据都往前移动一个位置，由此把pos上的数据踢掉</span></span><br><span class="line">	<span class="keyword">for</span>(i = pos<span class="number">-1</span>; i &lt; L-&gt;size; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		L-&gt;<span class="built_in">list</span>[i] = L-&gt;<span class="built_in">list</span> [i+<span class="number">1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	temp = L-&gt;<span class="built_in">list</span> [pos<span class="number">-1</span>];</span><br><span class="line">	L-&gt;size --;<span class="comment">//数据个数-1</span></span><br><span class="line">	<span class="keyword">return</span> temp;<span class="comment">//返回删除的数据	</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="删除表中具体值的数据"><a href="#删除表中具体值的数据" class="headerlink" title="删除表中具体值的数据"></a>删除表中具体值的数据</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">x：要删除的数据</span></span><br><span class="line"><span class="comment">删除成功返回1</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">deleteValueList</span><span class="params">(struct List *L, elemType x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,j;</span><br><span class="line">	<span class="comment">//遍历顺序表，找出与x相等的数据所在的位置i</span></span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span> ; i &lt; L-&gt;size; i++ )</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(L-&gt;<span class="built_in">list</span> [i] == x)</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//合理性判断</span></span><br><span class="line">	<span class="keyword">if</span>(i == L-&gt;size )</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//把i之后的每个数据往前移动一个位置，由此把i上的数据踢掉</span></span><br><span class="line">	<span class="keyword">for</span>(j = i+<span class="number">1</span>; j &lt; L-&gt;size ; j++)</span><br><span class="line">	&#123;</span><br><span class="line">		L-&gt;<span class="built_in">list</span> [j<span class="number">-1</span>] = L-&gt;<span class="built_in">list</span> [j];</span><br><span class="line">	&#125;</span><br><span class="line">	L-&gt;size --;<span class="comment">//数据个数-1</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;<span class="comment">//删除成功返回1</span></span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<h2 id="单个数据操作"><a href="#单个数据操作" class="headerlink" title="单个数据操作"></a>单个数据操作</h2><h3 id="替某个位置的换数据"><a href="#替某个位置的换数据" class="headerlink" title="替某个位置的换数据"></a>替某个位置的换数据</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">把第pos个的数据替换成x</span></span><br><span class="line"><span class="comment">替换成功返回1，否则返回0</span></span><br><span class="line"><span class="comment">说明：此位置已经转换成我们日常所习惯的位置，从1开始，而不是0开始</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">updatePosList</span><span class="params">(struct List *L, <span class="keyword">int</span> pos, elemType x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//合理性判断处理</span></span><br><span class="line">	<span class="keyword">if</span>(pos &lt; <span class="number">1</span> || pos &gt; L-&gt;size )</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	L-&gt;<span class="built_in">list</span>[pos<span class="number">-1</span>] = x;<span class="comment">//替换第pos个数据</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="获取数据位置"><a href="#获取数据位置" class="headerlink" title="获取数据位置"></a>获取数据位置</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">返回数据x所在的位置，失败返回0</span></span><br><span class="line"><span class="comment">说明：此位置已经转换成我们日常所习惯的位置，从1开始，而不是0开始</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">findList</span><span class="params">(struct List *L, elemType x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; L-&gt;size ; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(L-&gt;<span class="built_in">list</span>[i] == x)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">return</span> i+<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="获取相应位置的数据"><a href="#获取相应位置的数据" class="headerlink" title="获取相应位置的数据"></a>获取相应位置的数据</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">返回第pos个数据，失败退出</span></span><br><span class="line"><span class="comment">说明：此位置已经转换成我们日常所习惯的位置，从1开始，而不是0开始</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">elemType <span class="title">getElem</span><span class="params">(struct List *L, <span class="keyword">int</span> pos)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	elemType temp;</span><br><span class="line">	<span class="comment">//合理性判断处理</span></span><br><span class="line">	<span class="keyword">if</span>(pos&lt;<span class="number">1</span> || pos &gt; L-&gt;size )</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;元素序号越界！&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	temp = L-&gt;<span class="built_in">list</span> [pos<span class="number">-1</span>];</span><br><span class="line">	<span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="整个顺序表操作"><a href="#整个顺序表操作" class="headerlink" title="整个顺序表操作"></a>整个顺序表操作</h2><h3 id="遍历顺序表（打印表中所有数据）"><a href="#遍历顺序表（打印表中所有数据）" class="headerlink" title="遍历顺序表（打印表中所有数据）"></a>遍历顺序表（打印表中所有数据）</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">traverseList</span><span class="params">(struct List *L)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;当前顺序表中的数据为：&quot;</span>);</span><br><span class="line">	<span class="comment">//循环遍历顺序表并打印</span></span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i&lt;L-&gt;size; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d  &quot;</span>, L-&gt;<span class="built_in">list</span>[i]);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot; \n&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="打印表中数据个数"><a href="#打印表中数据个数" class="headerlink" title="打印表中数据个数"></a>打印表中数据个数</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sizeList</span><span class="params">(struct List *L)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;表中数据个数为: %d\n &quot;</span> , L-&gt;size );</span><br><span class="line">	<span class="keyword">return</span> L-&gt;size ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="清除表中所有数据"><a href="#清除表中所有数据" class="headerlink" title="清除表中所有数据"></a>清除表中所有数据</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">clearList</span><span class="params">(struct List *L)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(L-&gt;<span class="built_in">list</span> != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(L-&gt;<span class="built_in">list</span> );<span class="comment">//回收分配的内存</span></span><br><span class="line">		L-&gt;<span class="built_in">list</span> =<span class="number">0</span>;<span class="comment">//置0</span></span><br><span class="line">		L-&gt;size = L-&gt;maxSize = <span class="number">0</span>;<span class="comment">//置0</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h3><blockquote>
+<ul>
+<li>博客：<a href="www.fumasterlin.com">fumasterlin.com</a></li>
+<li>邮箱：<a href="fumasterlin@163.com">fumasterlin@163.com</a></li>
+</ul>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+</search>
