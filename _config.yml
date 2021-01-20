@@ -107,6 +107,7 @@ deploy:
   type: git
   repo:
     GitHub: https://github.com/fumasterlin/fumasterlin.github.io.git
+    Gitee: git@gitee.com:FumasterLin/fumasterlin.git
   branch: master
 
 symbols_count_time:
